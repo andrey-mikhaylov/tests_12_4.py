@@ -1,0 +1,18 @@
+2024-11-16 21:00:21,737 | INFO | запуск тестов Runner и Tournament
+2024-11-16 21:00:21,755 | WARNING | Неверный тип данных для объекта Runner
+Traceback (most recent call last):
+  File "E:\Users\Andrey\Doc\Urban\Projects\12\4\pythonProject\tests_12_4.py", line 35, in test_run
+    runner = Runner(1)
+             ^^^^^^^^^
+  File "E:\Users\Andrey\Doc\Urban\Projects\12\4\pythonProject\HumanMoveTest\rt_with_exceptions.py", line 6, in __init__
+    raise TypeError(f'Имя может быть только строкой, передано {type(name).__name__}')
+TypeError: Имя может быть только строкой, передано int
+2024-11-16 21:00:21,757 | WARNING | Неверная скорость для Runner
+Traceback (most recent call last):
+  File "E:\Users\Andrey\Doc\Urban\Projects\12\4\pythonProject\tests_12_4.py", line 18, in test_walk
+    runner = Runner('name', speed=-10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Users\Andrey\Doc\Urban\Projects\12\4\pythonProject\HumanMoveTest\rt_with_exceptions.py", line 11, in __init__
+    raise ValueError(f'Скорость не может быть отрицательной, сейчас {speed}')
+ValueError: Скорость не может быть отрицательной, сейчас -10
+2024-11-16 21:00:21,758 | INFO | завершение тестов Runner и Tournament
