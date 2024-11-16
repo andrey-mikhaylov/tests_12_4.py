@@ -14,10 +14,14 @@ class RunnerTest(unittest.TestCase):
         Далее вызовите метод walk у этого объекта 10 раз.
         После чего методом assertEqual сравните distance этого объекта со значением 50.
         """
-        runner = Runner('name')
-        for _ in range(10):
-            runner.walk()
-        self.assertEqual(runner.distance, 50)
+        try:
+            runner = Runner('name', speed=-10)
+            for _ in range(10):
+                runner.walk()
+            self.assertEqual(runner.distance, 50)
+            logging.info('"test_walk" выполнен успешно')
+        except ValueError:
+            logging.warning("Неверная скорость для Runner", exc_info=True)
 
     @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_run(self):
@@ -27,10 +31,14 @@ class RunnerTest(unittest.TestCase):
         Далее вызовите метод run у этого объекта 10 раз.
         После чего методом assertEqual сравните distance этого объекта со значением 100.
         """
-        runner = Runner('name')
-        for _ in range(10):
-            runner.run()
-        self.assertEqual(runner.distance, 100)
+        try:
+            runner = Runner(1)
+            for _ in range(10):
+                runner.run()
+            self.assertEqual(runner.distance, 100)
+            logging.info('"test_run" выполнен успешно')
+        except TypeError:
+            logging.warning("Неверный тип данных для объекта Runner", exc_info=True)
 
     @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_challenge(self):
@@ -104,28 +112,24 @@ class TournamentTest(unittest.TestCase):
         self.all_results['3'] = results
         self.assertTrue(results[max(results)] == 'Ник')
 
-    """
-    В данной задаче, а именно в методе start класса Tournament, допущена логическая ошибка. 
-    В результате его работы бегун с меньшей скоростью может пробежать некоторые дистанции быстрее, 
-    чем бегун с большей. Попробуйте решить эту проблему и обложить дополнительными тестами.
-    """
     @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_tournament4(self):
-        """ тест исправления ошибки в tournament.start """
+        """ тест исправления ошибки в tournament.start
+        В данной задаче, а именно в методе start класса Tournament, допущена логическая ошибка.
+        В результате его работы бегун с меньшей скоростью может пробежать некоторые дистанции быстрее,
+        чем бегун с большей. Попробуйте решить эту проблему и обложить дополнительными тестами.
+        """
         results = self.__test_tournament(5, 'Усэйн', 'Андрей', 'Ник')
         self.all_results['4'] = results
         self.assertTrue(results[len(results)] == 'Ник')
 
 
 if __name__ == '__main__':
-    logging.basicConfig()
-    unittest.main()
-    """
-    Вывод на консоль:
-    {1: Усэйн, 2: Ник}
-    {1: Андрей, 2: Ник}
-    {1: Андрей, 2: Усэйн, 3: Ник}
-    """
+    logging.basicConfig(level=logging.INFO, filemode='w', filename='runner_tests.log', encoding='utf8',
+                        format='%(asctime)s | %(levelname)s | %(message)s')
+    logging.info("запуск тестов Runner и Tournament")
+    unittest.main(exit=False)
+    logging.info("завершение тестов Runner и Tournament")
 
 
 """
